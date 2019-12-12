@@ -1,6 +1,14 @@
 def helloWorld():
     print("Hello World")
 
+
+def sumNumberts(num1, num2):
+    sum = num1 + num2
+    print("The sum of the numbers is {}".format(sum))
+
+
+sumNumberts(5, 2)
+
 helloWorld()
 """
 to define a function the same rules of variable definition apply

@@ -1,10 +1,14 @@
-for number in range(1, 11):
-    print(number)
+# for number in range(1, 11):
+#     print(number)
 
-oddSum = 0
+# oddSum = 0
 
-for num in range(1, 11):
-    if num % 2 is not 0:
-        oddSum = oddSum + num
+# for num in range(1, 11):
+#     if num % 2 is not 0:
+#         oddSum = oddSum + num
 
-print(oddSum)
+# print(oddSum)
+
+
+for i in range(0,51,5):
+    print (i)
