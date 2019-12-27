@@ -1,55 +1,61 @@
-
 import random
+
 
 def jogar():
     print("*********************************")
-    print("Bem vindo ao jogo de Adivinhação!")
+    print("***Bem vindo ao jogo da Forca!***")
     print("*********************************")
 
-    numero_secreto = random.randint(1,100)
-    total_tentativas = 0
-    pontos = 1000
+    arquivo = open("palavras.txt", "r")
+    palavras = []
 
-    print("Qual nível de dificuldade?")
-    print("(1) Fácil\n (2) Médio\n (3) Difícil")
+    for linha in arquivo:
+        linha = linha.strip()
+        palavras.append(linha)
+    
+    arquivo.close()
 
-    nivel = int(input("Escolha o nível: "))
+    numero = random.randrange(0,len(palavras))
+    palavra_secreta = palavras[numero].upper()
+    letras_acertadas = ["_" for i in palavra_secreta]
 
-    if(nivel == 1):
-        total_tentativas = 20
-    elif(nivel == 2):
-        total_tentativas = 10
-    else:
-        total_tentativas = 5
+    enforcou = False
+    acertou = False
+    erros = 0
 
+    print(letras_acertadas)
 
-    for rodada in range(1,total_tentativas + 1):
-        print("Tentativa {} de {}".format(rodada, total_tentativas))
-        chute = int(input("Digite um número entre 1 e 100: "))
-        print("Você digitou ", chute)
-
-        if (chute < 1 or chute > 100):
-            print("Você deve digitar um número entre 1 e 100!")
-            continue
-
-        acertou = chute == numero_secreto
-        maior = chute > numero_secreto
-        menor = chute < numero_secreto
-
-        if (acertou):
-            print("Você acertou e tem agora {} pontos!".format(pontos))
-            break
+    while (not enforcou and not acertou):
+        #get an input from user and remove all blank spaces
+        chute = input("Chute uma letra: " ).strip().upper()
+        
+        if (chute in palavra_secreta):
+            index = 0
+            for letra in palavra_secreta:
+                if (chute == letra):
+                    letras_acertadas[index] = letra
+                index += 1
         else:
-            if(maior):
-                print("Você errou! O seu número é maior do que o número secreto!")
-            elif(menor):
-                print("Você errou! O seu número é menor do que o número secreto!")
-            pontos_perdidos =  abs(numero_secreto - chute)
-            pontos = pontos - pontos_perdidos
-            print("O número secreto era {} e você tem agora {} pontos restantes de 1000".format(numero_secreto, pontos))
+            print("Você ainda tem {} tentativas".format(6-erros))
+            erros += 1
+
+        # if (erros == 6):
+        #     break
+        # if ("_" not in letras_acertadas):
+        #     break
+        # print(letras_acertadas)
+
+        enforcou = erros == 6
+        acertou = "_" not in letras_acertadas
+        print(letras_acertadas)
+
+    if(acertou):
+        print("Você ganhou!")
+    else:
+        print("Você perdeu. :(")
+
 
     print("Fim do jogo")
 
-
-if (__name__ == "__main__"):
+if(__name__ == "__main__"):
     jogar()
